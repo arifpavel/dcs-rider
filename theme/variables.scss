@@ -1,0 +1,26 @@
+@import "ionic.globals";
+
+$text-color: #000;
+$background-color: #fff;
+$driverProfilePictureSize: 120px;
+
+// primary: navigation, button
+// secondary: used as background for cars
+
+$colors: (
+  primary: #222222,
+  secondary: #FFC107,
+  danger: #f53d3d,
+  light: #FFF,
+  green: #8bc34a,
+  dark: #000000,
+  gray: #a2a2a2,
+  white: #FFF,
+  bg-color: #F7F9FB,
+  border-color: #E9EBEB,
+);
+
+
+@import "ionic.theme.default";
+$ionicons-font-path: "../assets/fonts";
+@import "ionic.ionicons";
