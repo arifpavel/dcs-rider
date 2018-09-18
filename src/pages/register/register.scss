@@ -1,0 +1,15 @@
+page-register {
+    .background{
+    	background: url('../assets/img/login_back.png') no-repeat;
+    	background-size: cover;
+    }
+    .list-form, .item-md, .label-md{
+    	background: none !important;
+    	color: #000000;
+    }
+    .label-md[floating] {
+	    margin-left: 0;
+	    color: #ffffff;
+	    margin-bottom: 0;
+	}
+} 

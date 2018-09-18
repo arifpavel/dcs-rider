@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-navbar color="green">
+    <h3 color="light" class="center">Profile</h3>
+    <ion-buttons end>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-segment [(ngModel)]="tabs">
+    <ion-segment-button value="profile">
+      {{'BASIC_PROFILE' | translate}}
+    </ion-segment-button>
+    <ion-segment-button value="cardsetting">
+      {{'PAYMENTS' | translate}}
+    </ion-segment-button>
+    <ion-segment-button value="ridehistroy" (click)="getTrips()">
+      {{'HISTORY' | translate}}
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="tabs">
+    <div *ngSwitchCase="'profile'" padding>
+      <div style="text-align:center">
+        <img src="{{ user.photoURL }}" style="width:50px;height:50px;border-radius:100px" (click)="chooseFile()">
+        <form ngNoForm>
+          <input id="avatar" name="file" type="file" (change)="upload()">
+        </form>
+        <h3>{{user.name}}</h3>
+      </div>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked color="primary">{{'FULLNAME' | translate}}</ion-label>
+          <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <button ion-button item-right clear *ngIf="!user.isPhoneVerified" (click)="verifyPhone()">{{'VERIFY' | translate}}</button>
+          <ion-label stacked color="primary">{{'PHONE_NUMBER' | translate}}</ion-label>
+          <ion-input type="text" [(ngModel)]="user.phoneNumber" [disabled]="user.isPhoneVerified"></ion-input>
+        </ion-item>
+        <ion-item>
+          <button ion-button item-right clear *ngIf="!user.isEmailVerified" (click)="verifyEmail()">{{'VERIFY' | translate}}</button>
+          <ion-label stacked color="primary">{{'EMAIL_ADDRESS' | translate}}</ion-label>
+          <ion-input type="text" [(ngModel)]="user.email" disabled></ion-input>
+        </ion-item>
+        <ion-item>
+          <button color="green" ion-button block (click)="save()">{{'SAVE' | translate}}</button>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngSwitchCase="'cardsetting'" padding>
+      <ion-grid>
+        <ion-row>
+          <ion-item>
+            <ion-label stacked>{{'CARD_NUMBER' | translate}}</ion-label>
+            <ion-input type="text" [(ngModel)]="number" size="20"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row class="split-row">
+          <ion-col col-6>
+            <ion-item>
+              <ion-label stacked>{{'EXPIRE_DATE' | translate}} (MM/YY)</ion-label>
+              <ion-input type="text" [(ngModel)]="exp" size="5"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label stacked>{{'CVV' | translate}}</ion-label>
+              <ion-input type="text" [(ngModel)]="cvv" size="4"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <button color="green" ion-button block (click)="saveCard()">{{'SAVE' | translate}}</button>
+    </div>
+    <div *ngSwitchCase="'ridehistroy'">
+      <ion-card *ngFor="let trip of trips">
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <h1 style="color: #8BC34A; font-weight: 600;">{{trip.currency}} {{ trip.fee - (trip.fee * trip.discount / 100) }}</h1>
+              <p>Method: {{ trip.paymentMethod }}</p>
+              <p>ID: {{ trip.createdAt }}</p>
+            </ion-col>
+            <ion-col>
+                <p>{{'FEE' | translate}}: {{trip.currency}} {{trip.fee}}</p>
+                <p>Promo: {{ trip.promo}}</p>
+                <p>Discount: {{trip.discount}}</p>
+              </ion-col>
+          </ion-row>
+          <ion-item>
+            <h2>From ({{ trip.pickedUpAt | date: 'medium'}})</h2>
+            <p>{{ trip.origin.vicinity }}</p>
+          </ion-item>
+          <ion-item>
+            <h2>To ({{ trip.droppedOffAt | date: 'medium'}})</h2>
+            <p>{{ trip.destination.vicinity }}</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

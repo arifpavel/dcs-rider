@@ -1,0 +1,32 @@
+<ion-content class="background">
+  <div padding text-center class="header">
+    <div class="logo">
+      <!-- <img src="assets/img/login.png" /> -->
+      <ion-icon name="ios-car" color="dark"></ion-icon>
+    </div>
+    <h2 ion-text color="dark">{{'LOGIN' | translate }}</h2>
+  </div>
+  <ion-list class="list-form" padding>
+    <ion-item>
+        <ion-label floating>
+            <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+            {{'EMAIL_ADDRESS'| translate}}
+        </ion-label>
+        <ion-input type="text" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>
+            <ion-icon name="key" item-start class="text-primary"></ion-icon>
+            {{'PASSWORD'| translate}}
+        </ion-label>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
+        <button ion-button clear item-right (click)="reset()" [disabled]="email.length == 0">{{'FORGOT' | translate}}</button>
+    </ion-item>
+    <ion-item>
+        <button padding ion-button block color="green" (click)="login()">{{'LOGIN' | translate}}</button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer *ngIf="isRegisterEnabled">
+    <button ion-button color="secondary" block (click)="signup()">{{'SIGN UP' | translate}}</button>
+</ion-footer>
